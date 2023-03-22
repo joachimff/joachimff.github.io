@@ -5,7 +5,6 @@ categories: [Fuzzing]
 tags: [français, fuzzing, ubpf]
 mermaid: true
 ---
-# Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)
 
 Nous allons maintenant entreprendre une analyse dynamique de la VM pour identifier des bugs potentiels. Pour ce faire, nous allons développer un fuzzer sur mesure en Rust qui va générer un grand nombre de programmes eBPF et les exécuter dans la machine virtuelle fournie par uBPF. 
 

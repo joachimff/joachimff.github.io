@@ -5,7 +5,6 @@ categories: [Fuzzing]
 tags: [english, fuzzing, ubpf]
 mermaid: true
 ---
-# Attacking uBPF VM - Part 3 Bug Analysis - (EN)
 
 Two bugs were discovered during the audit of the eBPF virtual machine. The first one is related to a security validation issue that leads to a division by zero (undefined behavior).
 

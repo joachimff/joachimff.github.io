@@ -5,7 +5,6 @@ categories: [Fuzzing]
 tags: [français, fuzzing, ubpf]
 mermaid: true
 ---
-# Attacking uBPF VM - Part 1 Reconnaissance - (FR)
 
 Cette série d'articles à pour but de présenter une étude de cas sur la recherche et l'exploitation de vulnérabilités d'une cible réelle: la librairie uBPF, une implémentation open-source d'une machine virtuelle eBPF. __Cette librairie est utilisée par Microsoft dans son projet eBPF-for-Windows__.
 
