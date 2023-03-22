@@ -5,14 +5,16 @@ categories: [Fuzzing]
 tags: [français, fuzzing, ubpf]     # TAG names should always be lowercase
 mermaid: true
 ---
+# Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)
+
 Nous allons maintenant entreprendre une analyse dynamique de la VM pour identifier des bugs potentiels. Pour ce faire, nous allons développer un fuzzer sur mesure en Rust qui va générer un grand nombre de programmes eBPF et les exécuter dans la machine virtuelle fournie par uBPF. 
 
 Étant donné la simplicité de la cible (moins de 2 000 lignes de code), le fuzzer sera simpliste, sans chercher à optimiser le nombre d'exécutions par seconde ou le code coverage.
 
 Lien vers les articles:
-- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
-- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing- the- fuzzer-(FR)/)
-- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
+- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
 
 This article is also available in english [here](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing- the- fuzzer-(EN)/).
 
@@ -208,5 +210,5 @@ Le fuzzer est maintenant fonctionnel, vous pouvez retrouver le code complet sur 
 
 Les tests sont réalisés dans une VM Ubuntu dans WSL sur un PC portable, les performances du fuzzer sont basses  (4000 exec/s), cependant ce sera suffisant pour trouver des bugs interessants puisqu'après seulement 5 minutes d'execution 2 bugs ont été identifiés.
 
-[=>Partie 3: Writing the fuzzer](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR))
+[=>Partie 3: Writing the fuzzer](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
 

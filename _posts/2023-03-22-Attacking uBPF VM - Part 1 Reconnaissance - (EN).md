@@ -5,12 +5,18 @@ categories: [Fuzzing]
 tags: [english, fuzzing, ubpf]     # TAG names should always be lowercase
 mermaid: true
 ---
+# Attacking uBPF VM - Part 1 Reconnaissance - (EN)
 
 The purpose of this series of articles is to present a case study on the research and exploitation of vulnerabilities in a real target: the uBPF library, an open-source implementation of an eBPF virtual machine. This library is used by Microsoft in its eBPF-for-Windows project.
 
 To assist us, a specific fuzzer was developed in Rust. The bugs discovered are representative of common vulnerabilities found in C-written programs: invalid memory access, integer overflow, and undefined behavior. The process of exploiting these vulnerabilities is also detailed.
 
-Although the target is relatively small (<3000 LoC), the methodology used to attack it is the same as for larger targets. This article aims to be informative and educational, and the developed fuzzer is open source and can be found on my GitHub => here.
+Although the target is relatively small (<3000 LoC), the methodology used to attack it is the same as for larger targets. This article aims to be informative and educational, and the developed fuzzer is open source and can be found on my GitHub.
+
+Articles:
+- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
 
 Links:
 - [Repo fuzzer](https://github.com/joachimff/eBPF-fuzzer)
@@ -124,4 +130,4 @@ This security check has a classic integer overflow bug, which will be quickly id
 
 Now that the reconnaissance step is complete, we can develop our fuzzer and start the dynamic analysis of the VM.
 
-[=>Part2 Dynamic Analysis](https://joachimff.github.io/posts/Attacking uBPF VM - Part 2 Writing the fuzzer - (EN))
+[Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)

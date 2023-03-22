@@ -5,11 +5,16 @@ categories: [Fuzzing]
 tags: [english, fuzzing, ubpf]     # TAG names should always be lowercase
 mermaid: true
 ---
+# Attacking uBPF VM - Part 3 Bug Analysis - (EN)
+
 Two bugs were discovered during the audit of the eBPF virtual machine. The first one is related to a security validation issue that leads to a division by zero (undefined behavior).
 
 The second one is an integer overflow in a security check, causing reads and writes to memory areas outside of those allocated to the VM.
 
-liste des articles  #TODO
+Articles:
+- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
 
 ___This article has been translated with the help of AI.___
 
