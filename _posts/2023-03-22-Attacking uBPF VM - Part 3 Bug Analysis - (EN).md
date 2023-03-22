@@ -1,20 +1,17 @@
 ---
-title: Attacking uBPF VM - Part 3 Bug Analysis - (FR)
-date: 2023-03-21 00:00:00 +0000
+title: Attacking uBPF VM - Part 3 Bug Analysis - (EN)
+date: 2023-03-22 00:00:00 +0000
 categories: [Fuzzing]
-tags: [français, fuzzing, ubpf]     # TAG names should always be lowercase
+tags: [english, fuzzing, ubpf]     # TAG names should always be lowercase
 mermaid: true
 ---
-Deux bugs ont été découverts lors de l'audit de la machine virtuelle eBPF. Le premier est lié à un problème de validation de sécurité qui entraine une division par zéro (undefined behaviour). 
+Two bugs were discovered during the audit of the eBPF virtual machine. The first one is related to a security validation issue that leads to a division by zero (undefined behavior).
 
-Le second est un integer overflow dans un contrôle de sécurité, entraînant des lectures et écritures dans des zones mémoire en dehors de celles allouées à la VM.
+The second one is an integer overflow in a security check, causing reads and writes to memory areas outside of those allocated to the VM.
 
-Lien vers les articles:
-- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
-- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing- the- fuzzer-(FR)/)
-- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
+liste des articles  #TODO
 
-This article is also available in english [here](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Annalysis-(EN)/).
+___This article has been translated with the help of AI.___
 
 # Undefined behaviour (division by 0)
 ## Report
@@ -44,7 +41,7 @@ __Payload__
 
 ## Analyse
 
-Le rapport d'ASAN permet de retrouver la partie du code à l'origine de la division par 0 :
+The ASAN report allows to identify the part of the code that causes the division by 0:
 ```c
 static uint32_t u32(uint64_t x) { return x; }
 ...
@@ -61,11 +58,11 @@ case EBPF_OP_DIV_REG:
 	break;
 ```
 
-Le bug constaté est plutôt simple : théoriquement, avant chaque opération de division par un registre, sa valeur doit être vérifiée pour s'assurer qu'elle est différente de zéro. Si tel est le cas, la division est effectuée. Sinon, la division n'est pas effectuée et l'instruction retourne 0.
+The observed bug is rather simple: in theory, before each division operation with a register, its value should be checked to ensure that it is different from zero. If so, the division is performed. Otherwise, the division is not performed and the instruction returns 0.
 
-Cependant, dans le cas des divisions sur 32 bits, la valeur totale du registre est vérifiée, alors que la division est effectuée uniquement sur les 32 bits low. Cela implique que si le registre a une valeur sur les 32 bits high mais pas sur les low, le contrôle de sécurité passera mais la division sera effectuée sur 0, entraînant ainsi un comportement indéfini.
+However, in the case of 32-bit divisions, the total value of the register is checked, whereas the division is performed only on the low 32 bits. This means that if the register has a value on the high 32 bits but not on the low ones, the security check will pass but the division will be performed on 0, thus resulting in undefined behavior.
 
-Pour corriger ce bug il faut caster la valeur du registre source en u32 avant de controler sa valeur:
+To fix this bug, it is necessary to cast the value of the source register to u32 before checking its value:
 ```c
 	reg[inst.dst] = u32(reg[inst.src]) ? u32(reg[inst.dst]) / u32(reg[inst.src]) : 0; 
 	reg[inst.dst] &= UINT32_MAX;
@@ -73,11 +70,11 @@ Pour corriger ce bug il faut caster la valeur du registre source en u32 avant de
 ```
 
 
-On remarque que dans l'implémentation de la division par une valeur immédiate la valeur est correctement castée avant d'être controlée.
+We notice that in the implementation of division by an immediate value, the value is correctly cast before being checked.
 
 # Unauthorized memory access 
 
-Ce bug est intéressant car il permet d'effectuer des accès mémoire non maîtrisés, dans certains cas ces vulnérabilités peuvent etre exploités pour executer du code ou provoquer un déni de service du syséme cible.
+This bug is interesting because it allows for uncontrolled memory access. In some cases, these vulnerabilities can be exploited to execute code or cause a denial of service on the target system.
 
 ## Report
 
@@ -112,22 +109,22 @@ __Payload__
 003=> opcode:0x27, dst:0x05, src:0x00, offset:0xD418, imm:0xCE5B94D3
 ```
 
-Après analyse l'instruction 0x001 est à l'origine du crash.
+After analysis, instruction 0x001 is the cause of the crash.
 
 ## Bug
 
-Premier constat: la machine virtuelle plante uniquement quand executée avec ASAN d'activé, dans ce cas la fonction bounds_check ne retourne pas d'erreur lors d'une tentative d'accès mémoire sur une adresse en dehors de l'espace de la VM. L'accès mémoire sur cette même adresse provoque une erreur de segmentation.
+First observation: the virtual machine crashes only when executed with ASAN enabled. In this case, the bounds_check function does not return an error when attempting to access memory at an address outside the VM space. Access to memory at the same address causes a segmentation fault.
 
-Autrement la fonction bounds_check fait correctement sont travail et retoune une erreur lors d'une tentative d'accès à une zone mémoire en dehors de la machine virtuelle. L'accès mémoire n'est alors pas executé et la machine virtuelle s'arrête avec le message d'erreur suivant:
+Otherwise, the bounds_check function correctly performs its job and returns an error when attempting to access memory outside the virtual machine. Memory access is then not executed, and the virtual machine stops with the following error message:
 
 ```rust
 uBPF error: out of bounds memory store at PC 1, addr 0xffffffffffffe063, size 8
 mem 0x5555555bb730/8092 stack 0x7fffffffd4c0/512
 ```
 
-Nous allons chercher à modifier le payload pour le minimiser et faire en sorte que le bug se déclenche à chaque execution et pas seulement quand ASAN est activé.
+We will try to modify the payload to minimize it and make the bug trigger on every execution, not just when ASAN is enabled.
 
-La premiere fonction à étudier est bounds_check, d'après le messsage d'erreur d'ASAN nous savons qu'elle présente un integer overflow à l'origine de l'accès mémoire non autorisé:
+The first function to study is bounds_check. According to the ASAN error message, we know that it has an integer overflow causing unauthorized memory access:
 
 ```c
 //Appel initial
@@ -161,18 +158,20 @@ bounds_check(
 }
 ```
 
-Cette fonction présente deux integer verflow:
-- Le premier bloc de code compare si l'adresse et la taille sont dans les limites du context. Si la somme de l'adresse et de la taille dépasse la limite maximale autorisée d'un pointeur, cela peut entraîner un overflow.
+This function has two integer overflows:
 
-- Le deuxième bloc de code compare si l'adresse et la taille sont dans les limites de la pile. Si la somme de l'adresse et de la taille dépasse la limite maximale autorisée d'un pointeur, cela peut également entraîner un overflow.
+-   The first block of code compares if the address and size are within the limits of the context. If the sum of the address and size exceeds the maximum allowed pointer value, it can cause an overflow.
+    
+-   The second block of code compares if the address and size are within the limits of the stack. If the sum of the address and size exceeds the maximum allowed pointer value, it can also cause an overflow.
+    
 
-Dans le contexte de la fonction, l'adresse (addr) est calculée en ajoutant la valeur du registre source (reg\[inst.src\]) à l'offset (inst.offset). La taille (size) représente le nombre de bytes à lire et est définie par les opérations d'accès mémoire. Il est possible de lire ou d'écrire au maximum 8 bytes.
+In the context of the function, the address (addr) is calculated by adding the value of the source register (reg[inst.src]) to the offset (inst.offset). The size (size) represents the number of bytes to read and is defined by the memory access operations. It is possible to read or write a maximum of 8 bytes.
 
-Pour reproduire le bug nous pouvons contrôler la valeur du registre source, mais la taille est déterminée par les opérations d'accès mémoire. Pour déclencher le bug, il faut passer que la somme du registre source + l'offset de l'instruction soit comprise entre `0xFFFF_FFFF_FFFF_FFFF` et `0xFFFF_FFFF_FFFF_FFF8` et exécuter une opération de lecture ou d'écriture de 8 bytes. 
+To reproduce the bug, we can control the value of the source register, but the size is determined by the memory access operations. To trigger the bug, we need to ensure that the sum of the source register + instruction offset is between `0xFFFF_FFFF_FFFF_FFFF` and `0xFFFF_FFFF_FFFF_FFF8` and execute a read or write operation of 8 bytes.
 
-Cette valeur passera les controles de sécurité de bounds_check, mais les accès mémoire se feront sur la valeur du registre source + offset soit 0xFFFF_FFFF_FFFF_FFFF qui ne fait pas partie des zones allouées au programme.
+This value will pass the security checks of bounds_check, but the memory accesses will be performed on the value of the source register + offset, which is `0xFFFF_FFFF_FFFF_FFFF` and not part of the program's allocated memory.
 
-Ci-dessous, un payload minimisé permettant de reproduire le bug à 100% :
+Below is a minimized payload that can reproduce the bug 100%:
 
 ```rust
 //r[6] = 0
@@ -204,11 +203,10 @@ SUMMARY: AddressSanitizer: SEGV /mnt/c/J/re/fuzz/ubpf/vm/ubpf_vm.c:533 in ubpf_e
 ==6773==ABORTING
 ```
 
-On retrouve bien une tentative d'ecriture sur l'adresse 0xffffffffffffffff comme attendu.
+We can indeed see an attempt to write to the address 0xffffffffffffffff, as expected.
 
 ## Exploitation:
 
-Nous somme limité ici par la taille de l'argument size passé à la fonction bounds_check est qui ne peut pas dépasser 8 bytes. Par conséquent, il n'est possible d'écrire ou de lire que sur les 8 derniers bytes de la mémoire, ce qui conduit systématiquement à une erreur de segmentation.
+We are limited here by the size of the `size` argument passed to the `bounds_check` function, which cannot exceed 8 bytes. Therefore, it is only possible to read from or write to the last 8 bytes of memory, which always results in a segmentation fault.
 
-Ce type de bug ne peut être exploité que pour des attaques de déni de service et ne permet hélas pas l'execution de code.
-
+This type of bug can only be exploited for denial-of-service attacks and unfortunately does not allow for code execution.

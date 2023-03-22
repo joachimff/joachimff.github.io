@@ -2,7 +2,7 @@
 title: Attacking uBPF VM - Part 1 Reconnaissance - (FR)
 date: 2023-03-21 00:00:00 +0000
 categories: [Fuzzing]
-tags: [français, fuzzing]     # TAG names should always be lowercase
+tags: [français, fuzzing, ubpf]     # TAG names should always be lowercase
 mermaid: true
 ---
 
@@ -10,13 +10,18 @@ Cette série d'articles à pour but de présenter une étude de cas sur la reche
 
 Pour nous nous aider un fuzzer spécifique a été développé en Rust. Les bugs découverts sont représentatifs des vulnérabilités courantes que l'on retrouve dans les programmes écrits en C: invalid memory access, integer overflow, undefined behavior. Le processus d'exploitation de ces vulnérabilités est également détaillé.
 
-Bien que la cible soit relativement petite (<3000 LoC), la méthodologie employée pour l'attaquer est la même que pour des cibles de plus grande envergure.  Cet article se veut informatif et éducatif, le fuzzer développé est open source et peut être retrouvé sur mon github => ici.
+Bien que la cible soit relativement petite (<3000 LoC), la méthodologie employée pour l'attaquer est la même que pour des cibles de plus grande envergure.  Cet article se veut informatif et éducatif, le fuzzer développé est open source et peut être retrouvé sur mon github.
 
-Cet article est également disponible en anglais à cette adresse: #TODO link article en anglais
+Lien vers les articles:
+- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing- the- fuzzer-(FR)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
 
 Links:
 - [Repo fuzzer](https://github.com/joachimff/eBPF-fuzzer)
 - [Repo uBPF](https://github.com/iovisor/ubpf)
+
+This article is also available in english [here](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
 
 # Comprendre la cible
 ## Machine virtuelle eBPF 
@@ -103,7 +108,7 @@ Le compiler JIT ne présente aucune mesure de sécurité spécifique, cette part
 
 Par contre lorsque le programme eBPF est exécuté dans une machine virtuelle dynamique, la fonction **bounds_check** est appelée avant chaque accès à la mémoire (opérations de stockage/chargement). Si l'adresse passée à ces fonctions est située en dehors de la zone mémoire du contexte ou du stakc de la vm, une erreur est retournée et l'exécution du programme est interrompue.
 
-```C
+```c
 static bool
 bounds_check([...]
 {
@@ -127,4 +132,4 @@ Ce controle de sécurité présente un bug classique d'integer overflow, il sera
 
 Maintenant que l'étape de reconnaissance est terminée nous allons pouvoir développer notre fuzzer et commencer l'analyse dynamique de la VM.
 
-[partie 2]() #TODO.
+[=>Partie 2: Ecriture du fuzzer](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR))
