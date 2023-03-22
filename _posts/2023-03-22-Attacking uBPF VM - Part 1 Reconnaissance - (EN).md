@@ -14,10 +14,9 @@ To assist us, a specific fuzzer was developed in Rust. The bugs discovered are r
 Although the target is relatively small (<3000 LoC), the methodology used to attack it is the same as for larger targets. This article aims to be informative and educational, and the developed fuzzer is open source and can be found on my GitHub.
 
 Articles:
-- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
-- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
-- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
-
+- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
 Links:
 - [Repo fuzzer](https://github.com/joachimff/eBPF-fuzzer)
 - [Repo uBPF](https://github.com/iovisor/ubpf)
@@ -71,7 +70,6 @@ The instruction set is deliberately reduced and includes the following operation
 The analysis begins with a static inspection of the code. In the src/vm directory, three interesting files are identified:
 
 -   **ubpf_loader.c** contains a single function **ubpf_load_elf**:
-    
     -   Loads an ELF program (a binary executable file format used by Linux) into an eBPF VM.
     -   It seems interesting for our analysis because it involves many operations on pointers and memory, which can potentially cause bugs.
     -   It is considered out of scope for this series of articles, but I think it presents several security problems.
@@ -100,7 +98,7 @@ Regarding the rest of the code, it can be noted that:
 -   External functions called from eBPF code can be registered via the function **ubpf_register**.
 -   It is possible to read and write to the registers of a VM using the functions **ubpf_set_registers** and **ubpf_get_registers**.
 
-## Controles de sécurité:
+## Security check
 
 The JIT compiler does not have any specific security measures, this part is normally handled by an external program called the verifier.
 
@@ -130,4 +128,4 @@ This security check has a classic integer overflow bug, which will be quickly id
 
 Now that the reconnaissance step is complete, we can develop our fuzzer and start the dynamic analysis of the VM.
 
-[Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
+[Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)

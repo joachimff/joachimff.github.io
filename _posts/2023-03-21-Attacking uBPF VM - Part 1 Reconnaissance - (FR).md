@@ -14,15 +14,15 @@ Pour nous nous aider un fuzzer spécifique a été développé en Rust. Les bugs
 Bien que la cible soit relativement petite (<3000 LoC), la méthodologie employée pour l'attaquer est la même que pour des cibles de plus grande envergure.  Cet article se veut informatif et éducatif, le fuzzer développé est open source et peut être retrouvé sur mon github.
 
 Lien vers les articles:
-- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
-- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR)/)
-- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
+- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
 
 Links:
 - [Repo fuzzer](https://github.com/joachimff/eBPF-fuzzer)
 - [Repo uBPF](https://github.com/iovisor/ubpf)
 
-This article is also available in english  [here](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
+This article is also available in english  [here](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/).
 
 
 # Comprendre la cible
@@ -104,7 +104,7 @@ En ce qui concerne le reste du code, on peut noter que :
 -   Il est possible d'enregistrer des fonctions externes appelées depuis le code eBPF via la fonction **ubpf_register**.
 -   Il est possible d'accéder en lecture et en écriture aux registres d'une VM à l'aide des fonctions **ubpf_set_registers** et **ubpf_get_registers**.
 
-## Controles de sécurité:
+## Controles de sécurité
 
 Le compiler JIT ne présente aucune mesure de sécurité spécifique, cette partie est normalement prise en charge par programme externe appelé verifier.
 
@@ -134,4 +134,4 @@ Ce controle de sécurité présente un bug classique d'integer overflow, il sera
 
 Maintenant que l'étape de reconnaissance est terminée nous allons pouvoir développer notre fuzzer et commencer l'analyse dynamique de la VM.
 
-[=>Partie 2: Ecriture du fuzzer](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR)/)
+[Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR)/)

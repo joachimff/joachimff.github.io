@@ -12,11 +12,11 @@ Deux bugs ont été découverts lors de l'audit de la machine virtuelle eBPF. Le
 Le second est un integer overflow dans un contrôle de sécurité, entraînant des lectures et écritures dans des zones mémoire en dehors de celles allouées à la VM.
 
 Lien vers les articles:
-- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
-- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR)/)
-- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/2023-03-21-Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
+- [Attacking uBPF VM - Part 1 Reconnaissance - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(FR)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(FR)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)
 
-This article is also available in english [here](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Annalysis-(EN)/).
+This article is also available in english [here](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)).
 
 # Undefined behaviour (division by 0)
 ## Report
@@ -208,7 +208,7 @@ SUMMARY: AddressSanitizer: SEGV /mnt/c/J/re/fuzz/ubpf/vm/ubpf_vm.c:533 in ubpf_e
 
 On retrouve bien une tentative d'ecriture sur l'adresse 0xffffffffffffffff comme attendu.
 
-## Exploitation:
+## Exploitation
 
 Nous somme limité ici par la taille de l'argument size passé à la fonction bounds_check est qui ne peut pas dépasser 8 bytes. Par conséquent, il n'est possible d'écrire ou de lire que sur les 8 derniers bytes de la mémoire, ce qui conduit systématiquement à une erreur de segmentation.
 

@@ -12,9 +12,9 @@ Two bugs were discovered during the audit of the eBPF virtual machine. The first
 The second one is an integer overflow in a security check, causing reads and writes to memory areas outside of those allocated to the VM.
 
 Articles:
-- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
-- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
-- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
+- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
 
 ___This article has been translated with the help of AI.___
 
@@ -210,7 +210,7 @@ SUMMARY: AddressSanitizer: SEGV /mnt/c/J/re/fuzz/ubpf/vm/ubpf_vm.c:533 in ubpf_e
 
 We can indeed see an attempt to write to the address 0xffffffffffffffff, as expected.
 
-## Exploitation:
+## Exploitation
 
 We are limited here by the size of the `size` argument passed to the `bounds_check` function, which cannot exceed 8 bytes. Therefore, it is only possible to read from or write to the last 8 bytes of memory, which always results in a segmentation fault.
 

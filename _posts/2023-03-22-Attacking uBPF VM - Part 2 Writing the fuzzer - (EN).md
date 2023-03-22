@@ -12,9 +12,9 @@ We will now undertake a dynamic analysis of the VM to identify potential bugs. T
 Given the simplicity of the target (less than 2,000 lines of code), the fuzzer will be simplistic, without seeking to optimize the number of executions per second or code coverage.
 
 Articles:
-- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
-- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
-- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
+- [Attacking uBPF VM - Part 1 Reconnaissance - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/)
+- [Attacking uBPF VM - Part 2 Writing the fuzzer - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-2-Writing-the-fuzzer-(EN)/)
+- [Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
 
 ___This article has been translated with the help of AI.___
 
@@ -211,4 +211,4 @@ The fuzzer is now functional, you can find the complete code on my [github.com/j
 
 The tests are performed in an Ubuntu VM in WSL on a laptop, the performance of the fuzzer is low (4000 exec/s), however this will be enough to find interesting bugs since after only 5 minutes of execution, 2 bugs have been identified.
 
-[Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/2023-03-22-Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
+[Attacking uBPF VM - Part 3 Bug Analysis - (EN)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(EN)/)
