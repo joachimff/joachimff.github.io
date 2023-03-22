@@ -2,7 +2,7 @@
 title: Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)
 date: 2023-03-21 00:00:00 +0000
 categories: [Fuzzing]
-tags: [français, fuzzing, ubpf]     # TAG names should always be lowercase
+tags: [français, fuzzing, ubpf]
 mermaid: true
 ---
 # Attacking uBPF VM - Part 2 Writing the fuzzer - (FR)

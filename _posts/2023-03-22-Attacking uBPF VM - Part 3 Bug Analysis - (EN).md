@@ -2,7 +2,7 @@
 title: Attacking uBPF VM - Part 3 Bug Analysis - (EN)
 date: 2023-03-22 00:00:00 +0000
 categories: [Fuzzing]
-tags: [english, fuzzing, ubpf]     # TAG names should always be lowercase
+tags: [english, fuzzing, ubpf]
 mermaid: true
 ---
 # Attacking uBPF VM - Part 3 Bug Analysis - (EN)
