@@ -207,6 +207,6 @@ loop{
 
 Le fuzzer est maintenant fonctionnel, vous pouvez retrouver le code complet sur mon #TODO [github](). 
 
-Les tests sont réalisés dans une VM Ubuntu dans WSL sur un PC portable, les performances du fuzzer sont basses  (4000 exec/s), cependant ce sera suffisant pour trouver des bugs interessants puisqu'après seulement 5 minutes d'execution 2 bugs ont été identifiés.
+Les tests sont réalisés sur une VM Ubuntu sur un PC portable, les performances du fuzzer sont execrables  (4000 exec/s), cependant ce sera suffisant pour trouver des bugs interessants puisqu'après seulement 5 minutes d'execution 2 bugs ont été identifiés.
 
 [Attacking uBPF VM - Part 3 Bug Analysis - (FR)](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-3-Bug-Analysis-(FR)/)

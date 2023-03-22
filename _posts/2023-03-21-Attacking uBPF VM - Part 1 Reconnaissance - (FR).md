@@ -24,7 +24,7 @@ Links:
 This article is also available in english  [here](https://joachimff.github.io/posts/Attacking-uBPF-VM-Part-1-Reconnaissance-(EN)/).
 
 
-# Comprendre la cible
+# La cible
 ## Machine virtuelle eBPF 
 
 La VM eBPF (Extended Berkeley Packet Filter) est une machine virtuelle qui permet l'exécution de programmes de filtrage de paquets personnalisés sur le noyau Linux. Elle a été introduite dans le noyau Linux 3.18 elle permet d'executer du code dans le contexte du kernel sans avoir a compiler de module spécifique.
